@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battle of Dice</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h2>BATTLE OF DICE</h2>
+        </header>
+        <main>
+            <div id="player1" class="player1" style="background-color: grey;">
+                <div class="player">
+                    <div class="containerPlayer">
+                        <div id="player1Bar">
+                            <input type="range" class="bar" name="player1Bar" min=0 max=100 value=100>
+                        </div>
+                        <div id="player1Header">
+                            <p class= "playerName" id="player1Name">Player 1</p>
+                        </div>
+                        <div id="player1Image">
+                            <img src="/img/iconPlayer.png" alt="Image Player" class="imagePlayer">
+                        </div>
+                        <div class="playerStatus" id="player1Status">
+                            <p class="status">STATUS</p>
+                            <p class="attack" id="attack1">Current Attack : <span id="valueAttack1">0</span></p>
+                            <p class="health" id="health1">Current Health : <span  id="valueHealth1">100</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="dadu">
+                <div class="containerDadu">
+                    <input type="button" value="New Game" class="button" id="newGame"> </br>
+                    <div id="dice"><img src="/img/dice-2-md.png" alt="dice" class="dice1"></div> </br>
+                    <input type="button" value="Role Dice" class="button" id="roleDice"></br>
+                    <input type="button" value="Attack" class="button" id="serang"></br>
+                    <input type="button" value="Instruction" class="button" id="instruction">
+                </div>
+            </div>
+            <div id="player2" class="player2" style="background-color: white;">
+                <div class="player">
+                    <div class="containerPlayer">
+                        <div id="player2Bar">
+                            <input type="range" class="bar" name="player2Bar" min=0 max=100 value=100>
+                        </div>
+                        <div id="player2Header">
+                            <p class= "playerName" id="player2Name">Player 2</p>
+                        </div>
+                        <div id="player2Image">
+                            <img src="/img/iconPlayer.png" alt="Image Player" class="imagePlayer">
+                        </div>
+                        <div class="playerStatus" id="player2Status">
+                            <p class="status">STATUS</p>
+                            <p class="attack" id="attack2">Current Attack : <span id="valueAttack2">0</span></p>
+                            <p class="health" id="health2">Current Health : <span id="valueHealth2">100</span></p>
+                            
+                        </div>
+                    </div>
+                </div>    
+            </div>
+        </main>
+        <footer>
+            <p class="footer">copyright@2020</p>     
+        </footer>
+    </div>
+    <script>
+        alert("Selamat datang di BATTLE OF DICE")
+        let player1Name = document.getElementById("player1Name")
+        player1Name.innerText = prompt("Silahkan masukkan nama player 1")
+        let bar1 = document.getElementById("player1Bar")
+        let bar2 = document.getElementById("player2Bar")
+        let valueAttack1 = document.getElementById("valueAttack1")
+        let valueAttack2 = document.getElementById("valueAttack2")
+        let valueHealth1 = document.getElementById("valueHealth1")
+        let valueHealth2 = document.getElementById("valueHealth2")
+        let warna1 = document.getElementById("player1")
+        let warna2 = document.getElementById("player2")
+        let imageDice = document.getElementById("dice")
+        let newGame = document.getElementById("newGame")
+        let roleDice = document.getElementById("roleDice")
+        let attack = document.getElementById("serang")
+        let instruction = document.getElementById("instruction")
+        
+
+        roleDice.addEventListener("click", function() {
+            let number = Math.ceil(Math.random()*10/1.67)
+            
+            if( number === 1 && warna1.style.backgroundColor === "grey" ) {
+                warna1.style.backgroundColor = "white"
+                warna2.style.backgroundColor = "grey"
+                valueAttack1.innerText = '0'
+                valueAttack2.innerText = '0'
+                imageDice.innerHTML = '<img src="/img/dice-1-md.png" alt="dice" class="dice1">'
+            } else if (number === 1 && warna2.style.backgroundColor === "grey") {
+                warna2.style.backgroundColor = "white"
+                warna1.style.backgroundColor = "grey"
+                valueAttack1.innerText = '0'
+                valueAttack2.innerText = '0'
+                imageDice.innerHTML = '<img src="/img/dice-1-md.png" alt="dice" class="dice1">'
+            }
+            
+            switch (number) {
+                case number = 2 :
+                    imageDice.innerHTML = '<img src="/img/dice-2-md.png" alt="dice" class="dice1">'
+                    break
+                case number = 3 :
+                    imageDice.innerHTML = '<img src="/img/dice-3-md.png" alt="dice" class="dice1">'
+                    break
+                case number = 4 :
+                    imageDice.innerHTML = '<img src="/img/dice-4-md.png" alt="dice" class="dice1">'
+                    break
+                case number = 5 :
+                    imageDice.innerHTML = '<img src="/img/dice-5-md.png" alt="dice" class="dice1">'
+                    break
+                case number = 6 :
+                    imageDice.innerHTML = '<img src="/img/dice-6-md.png" alt="dice" class="dice1">'
+                    break
+            }
+            
+            if ( warna1.style.backgroundColor === "grey" && number !== 1) {
+                valueAttack1.innerText = parseInt(valueAttack1.innerText) + number
+            } else if ( warna2.style.backgroundColor === "grey" && number !== 1) {
+                valueAttack2.innerText = parseInt(valueAttack2.innerText) + number
+            }
+
+        })
+
+        attack.addEventListener ("click" , function () {
+            if ( warna1.style.backgroundColor === "grey") {
+                valueHealth2.innerText = parseInt(valueHealth2.innerText) - parseInt(valueAttack1.innerText)
+                bar2.innerHTML = '<input type="range" class="bar" name="player2Bar" min=0 max=100 value=' + valueHealth2.innerText +'>'
+                warna1.style.backgroundColor = "white"
+                warna2.style.backgroundColor = "grey"
+                valueAttack1.innerText = '0'
+                let health2 = parseInt(valueHealth2.innerText)
+                if ( health2 <= 0) {
+                alert( player2Name.innerText + '  WON')
+                }
+            }   else if ( warna2.style.backgroundColor === "grey" ) {
+                valueHealth1.innerText = parseInt(valueHealth1.innerText) - parseInt(valueAttack2.innerText)
+                bar1.innerHTML = '<input type="range" class="bar" name="player1Bar" min=0 max=100 value='+ valueHealth1.innerText +'>'
+                warna2.style.backgroundColor = "white"
+                warna1.style.backgroundColor = "grey"
+                valueAttack2.innerText = '0'
+                let health1 = parseInt(valueHealth1.innerText)
+                if ( health1 <= 0) {
+                alert( player1Name.innerText + '  WON')
+                }
+            }
+        })
+
+        newGame.addEventListener ("click" , function () {
+            warna1.style.backgroundColor = "grey"
+            warna2.style.backgroundColor = "white"
+            valueAttack1.innerText = '0'
+            valueAttack2.innerText = '0'
+            valueHealth1.innerText = '100'
+            valueHealth2.innerText = '100'
+            bar1.innerHTML = '<input type="range" class="bar" name="player1Bar" min=0 max=100 value=100>'
+            bar2.innerHTML = '<input type="range" class="bar" name="player2Bar" min=0 max=100 value=100>'
+
+        })
+
+        instruction.addEventListener ("click" , function () {
+            alert (
+                `Instruksi Permainan
+
+                1. Selamat datang di permainan Battle of Dice
+
+                2. Game ini merupakan pengembangan dari algoritma permainan DICE PIG GAME. Pig Dice Game
+
+                3. Permainan ini dimainkan oleh 2 player , player 1 adalah robot, dan player 2 pirates
+
+                4. Permainan dimulai dari giliran robot
+
+                5. Player dapat mengclick roll-dice tanpa ada batasan berapa kali click, dan jumlah dadu akan diakumulasi menjadi nilai serangan dengan click button attack
+
+                6. Namun , berhati-hatilah dalam klik roll dice karena jika anda mendapat angka 1, serangan anda akan dibatalkan dan akan menjadi giliran player berikutnya
+
+                7. Player yang dapat membuat health bar musuh menjadi 0 pertama kali yang akan menjadi pemenangnya`
+            )
+        })
+
+        
+    </script>
+    <script>
+        let player2Name = document.getElementById("player2Name")
+        player2Name.innerText = prompt("Silahkan masukkan nama player 2")
+    </script>
+</body>
+</html>
+
